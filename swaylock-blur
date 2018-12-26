@@ -7,6 +7,6 @@ swaylock \
     -efr \
     -i $image \
     --indicator-radius 100 \
-    --indicator-thickness 20 \
+    --indicator-thickness 15 \
     --inside-color 00000033
 rm $image
