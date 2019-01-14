@@ -3,10 +3,5 @@
 image=$(mktemp)
 grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name') $image
 convert $image -blur 0x8 $image
-swaylock \
-    -efr \
-    -i $image \
-    --indicator-radius 100 \
-    --indicator-thickness 15 \
-    --inside-color 00000033
+swaylock -i $image "$@"
 rm $image
