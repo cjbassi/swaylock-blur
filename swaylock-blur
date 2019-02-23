@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-image=$(mktemp)
-grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name') $image
-convert $image -blur 0x8 $image
-swaylock -i $image "$@"
-rm $image
