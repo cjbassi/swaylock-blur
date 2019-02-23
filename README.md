@@ -30,4 +30,4 @@ cargo install --git https://github.com/cjbassi/swaylock-blur
 
 ### Arch Linux
 
-Available in the AUR using `swaylock-blur-git` or `swaylock-blur-bin`.
+Available in the AUR using `swaylock-blur-bin`.
