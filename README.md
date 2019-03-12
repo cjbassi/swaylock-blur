@@ -6,6 +6,12 @@ Now with multimonitor support!
 
 Note: Only works on Sway.
 
+## Usage
+
+The blur intensity can be set with the `--blur-sigma=uint` flag.
+
+Swaylock flags can be passed through by adding `--` followed by the flags.
+
 ## Installation
 
 Requires:
@@ -13,12 +19,6 @@ Requires:
 - ffmpeg
 - swaylock
 - sway
-
-## Usage
-
-The blur intensity can be set with the `--blur-sigma=uint` flag.
-
-Swaylock flags can be passed through by adding `--` followed by the flags.
 
 ### Prebuilt binaries:
 
