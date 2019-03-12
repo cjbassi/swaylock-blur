@@ -1,10 +1,20 @@
-use std::env;
 use std::fs::File;
 use std::process::Command;
 
 use i3ipc::I3Connection;
+use structopt::StructOpt;
+
+#[derive(StructOpt)]
+struct Args {
+    #[structopt(long = "blur-sigma", default_value = "20")]
+    blur_sigma: usize,
+
+    swaylock_args: Vec<String>,
+}
 
 fn main() {
+    let args = Args::from_args();
+
     let outputs: Vec<i3ipc::reply::Output> = I3Connection::connect()
         .expect("failed to connect to i3/Sway ipc")
         .get_outputs()
@@ -16,37 +26,46 @@ fn main() {
 
     let temp_dir = tempfile::tempdir().expect("failed to create temp dir");
 
-    let mut lock_command = vec!["swaylock".to_string()];
+    let mut swaylock_args = args.swaylock_args.clone();
 
     outputs.iter().enumerate().for_each(|(i, output)| {
-        let path_string = temp_dir
+        let screenshot_path_string = temp_dir
             .path()
-            .join(i.to_string())
+            .join(format!("{}.png", i))
             .to_string_lossy()
             .to_string();
-        File::create(&path_string).expect("failed to create tempfile");
+        let blur_path_string = temp_dir
+            .path()
+            .join(format!("{}blur.png", i))
+            .to_string_lossy()
+            .to_string();
+        File::create(&screenshot_path_string).expect("failed to create tempfile");
         Command::new("grim")
-            .args(&["-o", &output.name, &path_string])
+            .args(&["-o", &output.name, &screenshot_path_string])
             .spawn()
             .expect("failed to execute grim")
             .wait()
             .expect("failed to wait on grim");
-        Command::new("convert")
-            .args(&[&path_string, "-blur", "0x8", &path_string])
+        Command::new("ffmpeg")
+            .args(&[
+                "-i",
+                &screenshot_path_string,
+                "-vf",
+                &format!("gblur=sigma={}", args.blur_sigma),
+                &blur_path_string,
+            ])
             .spawn()
-            .expect("failed to execute imagemagick")
+            .expect("failed to execute ffmpeg")
             .wait()
-            .expect("failed to wait on imagemagick");
-        lock_command.append(&mut vec![
+            .expect("failed to wait on ffmpeg");
+        swaylock_args.append(&mut vec![
             "-i".to_string(),
-            format!("{}:{}", &output.name, &path_string),
+            format!("{}:{}", &output.name, &blur_path_string),
         ]);
     });
 
-    lock_command.append(&mut env::args().collect::<Vec<String>>()[1..].to_owned());
-
-    Command::new(&lock_command[0])
-        .args(&lock_command[1..])
+    Command::new("swaylock")
+        .args(&mut swaylock_args)
         .spawn()
         .expect("failed to execute swaylock")
         .wait()
