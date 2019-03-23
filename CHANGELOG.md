@@ -6,10 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0]
+
 ### Added
 
-- Add multimonitor support
+- Add `blur-sigma` option which allows for adjusting bluriness
 
 ### Changed
 
-- Port from bash to Rust
+- Switch from imagemagick to ffmpeg
+- swaylock arguments have to be preceeded by `--` now
+
+[Unreleased]: https://github.com/cjbassi/swaylock-blur/compare/0.3.0...HEAD
+[0.3.0]: https://github.com/cjbassi/swaylock-blur/compare/0.2.1...0.3.0
