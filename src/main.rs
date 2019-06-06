@@ -48,6 +48,8 @@ fn main() {
             .expect("failed to wait on grim");
         Command::new("ffmpeg")
             .args(&[
+                "-loglevel",
+                "fatal",
                 "-i",
                 &screenshot_path_string,
                 "-vf",
