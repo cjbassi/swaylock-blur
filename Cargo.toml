@@ -1,6 +1,6 @@
 [package]
 name = "swaylock-blur"
-version = "0.3.0"
+version = "0.3.1"
 authors = ["Caleb Bassi <calebjbassi@gmail.com>"]
 edition = "2018"
 

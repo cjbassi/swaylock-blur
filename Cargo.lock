@@ -288,7 +288,7 @@ dependencies = [
 
 [[package]]
 name = "swaylock-blur"
-version = "0.3.0"
+version = "0.3.1"
 dependencies = [
  "i3ipc 0.10.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "structopt 0.2.15 (registry+https://github.com/rust-lang/crates.io-index)",
