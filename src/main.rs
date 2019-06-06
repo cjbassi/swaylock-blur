@@ -9,6 +9,7 @@ struct Args {
     #[structopt(long = "blur-sigma", default_value = "20")]
     blur_sigma: usize,
 
+    /// Must be preceded by `--`
     swaylock_args: Vec<String>,
 }
 
