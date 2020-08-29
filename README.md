@@ -1,3 +1,5 @@
+### Deprecated in favor of https://github.com/mortie/swaylock-effects.
+
 # swaylock-blur
 
 A small Rust program that runs [swaylock](https://github.com/swaywm/swaylock) and sets the image to a blurred screenshot of the desktop.
