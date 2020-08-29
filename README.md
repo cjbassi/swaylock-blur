@@ -2,8 +2,6 @@
 
 A small Rust program that runs [swaylock](https://github.com/swaywm/swaylock) and sets the image to a blurred screenshot of the desktop.
 
-Now with multimonitor support!
-
 Note: Only works on Sway.
 
 ## Usage
