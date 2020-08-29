@@ -43,10 +43,8 @@ fn main() {
         File::create(&screenshot_path_string).expect("failed to create tempfile");
         Command::new("grim")
             .args(&["-o", &output.name, &screenshot_path_string])
-            .spawn()
-            .expect("failed to execute grim")
-            .wait()
-            .expect("failed to wait on grim");
+            .status()
+            .expect("failed to execute grim");
         Command::new("ffmpeg")
             .args(&[
                 "-loglevel",
@@ -57,10 +55,8 @@ fn main() {
                 &format!("gblur=sigma={}", args.blur_sigma),
                 &blur_path_string,
             ])
-            .spawn()
-            .expect("failed to execute ffmpeg")
-            .wait()
-            .expect("failed to wait on ffmpeg");
+            .status()
+            .expect("failed to execute ffmpeg");
         swaylock_args.append(&mut vec![
             "-i".to_string(),
             format!("{}:{}", &output.name, &blur_path_string),
@@ -69,8 +65,6 @@ fn main() {
 
     Command::new("swaylock")
         .args(&mut swaylock_args)
-        .spawn()
-        .expect("failed to execute swaylock")
-        .wait()
-        .expect("failed to wait on swaylock");
+        .status()
+        .expect("failed to execute swaylock");
 }
